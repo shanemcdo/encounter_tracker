@@ -1,4 +1,5 @@
 import { createAsync, useSearchParams } from "@solidjs/router";
+import { Title } from "@solidjs/meta";
 import { For, Show } from "solid-js";
 import { readFile } from "fs/promises";
 import CreatureDetail from "~/components/CreatureDetail";
@@ -18,10 +19,21 @@ async function getEncounter(filename: string): Promise<Encounter> {
 export default function Encounter() {
 	const [searchParams, ] = useSearchParams()
 	const encounter = createAsync(() => getEncounter(decodeURIComponent(searchParams.encounter as string)));
+	const name = () => {
+		if(typeof searchParams.encounter !== 'string') {
+			return null;
+		}
+		const result = searchParams.encounter.split('/').at(-1);
+		return result;
+	}
 	return (
 		<main>
 			<Show when={searchParams.prev}>
 				<a href={`../?path=${searchParams.prev as string}`}>Back</a>
+			</Show>
+			<Show when={name()}>
+				<Title>{name()}</Title>
+				<h1 class={styles.title}>{name()}</h1>
 			</Show>
 			<div class={styles.grid}>
 				<For each={encounter()}>{ creature =>
