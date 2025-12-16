@@ -1,7 +1,7 @@
 import { createAsync, useSearchParams } from "@solidjs/router";
-import { createStore } from "solid-js/store";
 import { For, Show } from "solid-js";
 import { readFile } from "fs/promises";
+import Creature from "~/components/Creature";
 
 import styles from "./encounter.module.css";
 
@@ -13,31 +13,6 @@ async function getEncounter(filename: string): Promise<Encounter> {
 	} catch {
 		return [];
 	}
-}
-
-function Creature(props: {
-	creature: CreatureBlueprint
-}) {
-	const [creature, setCreature] = createStore<CreatureInstance>({
-		hp: props.creature.max_hp,
-		...props.creature
-	});
-	let numberInput!: HTMLInputElement;
-	return <>
-		<span>{creature.name}</span>
-		<span>{creature.hp}/{creature.max_hp}</span>
-		<input type="number" ref={numberInput} value={0} />
-		<input
-			type="button" 
-			value="Damage"
-			onclick={() => setCreature('hp', value => value - numberInput.valueAsNumber)}
-		/>
-		<input
-			type="button" 
-			value="heal"
-			onclick={() => setCreature('hp', value => value + numberInput.valueAsNumber)}
-		/>
-	</>;
 }
 
 export default function Encounter() {
