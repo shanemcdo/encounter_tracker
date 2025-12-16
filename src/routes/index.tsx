@@ -1,19 +1,29 @@
-import { Title } from "@solidjs/meta";
-import Counter from "~/components/Counter";
+import { For } from "solid-js";
+import { readFileSync } from "fs";
+import Creature from "~/components/Creature";
+
+function getEncounter(): Encounter {
+	"use server";
+	return [
+		{
+			name: "Ghost Pirate",
+			max_hp: 50
+		},
+		{
+			name: "Vampire Spawn",
+			max_hp: 70
+		}
+	];
+	const file = readFileSync('example.json', 'utf-8');
+	return JSON.parse(file);
+}
 
 export default function Home() {
-  return (
-    <main>
-      <Title>Hello World</Title>
-      <h1>Hello world!</h1>
-      <Counter />
-      <p>
-        Visit{" "}
-        <a href="https://start.solidjs.com" target="_blank">
-          start.solidjs.com
-        </a>{" "}
-        to learn how to build SolidStart apps.
-      </p>
-    </main>
-  );
-}
+	const encounter = getEncounter();
+	return (
+		<main>
+			<For each={encounter}>{ creature =>
+				<Creature creature={creature} />
+			}</For>
+		</main>
+	); }
