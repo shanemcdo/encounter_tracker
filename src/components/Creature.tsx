@@ -1,4 +1,4 @@
-import "./Creature.css";
+import "./Creature.module.css";
 
 interface Props {
 	creature: Creature,
