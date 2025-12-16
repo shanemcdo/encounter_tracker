@@ -17,7 +17,10 @@ export default function CreatureDetail(props: {
 				[styles.dead]: creature.hp <= 0,
 			}}
 		>
-			<MaybeA href={creature.href}>{creature.name}</MaybeA>
+			<MaybeA
+				href={creature.href}
+				target="_blank"
+			>{creature.name}</MaybeA>
 		</span>
 		<span
 			classList={{
