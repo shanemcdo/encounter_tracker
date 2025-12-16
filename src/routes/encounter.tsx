@@ -23,8 +23,7 @@ export default function Encounter() {
 		if(typeof searchParams.encounter !== 'string') {
 			return null;
 		}
-		const result = searchParams.encounter.split('/').at(-1);
-		return result;
+		return searchParams.encounter.split('/').at(-1)?.split('.')[0];
 	}
 	return (
 		<main>
