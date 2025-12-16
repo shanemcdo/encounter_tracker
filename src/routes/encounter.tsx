@@ -22,7 +22,6 @@ async function memoFetch(url: string) {
 	if(url in fetched) {
 		return fetched[url];
 	}
-	console.count('fetching');
 	const res = await fetch(url);
 	if(!res.ok) {
 		return [false, null];
