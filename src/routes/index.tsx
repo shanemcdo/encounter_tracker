@@ -1,6 +1,7 @@
 import { createAsync } from "@solidjs/router";
 import { glob } from "fs/promises";
 import { createSignal, For, untrack } from "solid-js";
+import expandTilde from "expand-tilde";
 
 async function getFiles(cwd: string) {
 	"use server";
@@ -26,7 +27,7 @@ export default function Home() {
 				id="cwd"
 				value={untrack(cwd)}
 				onchange={event => {
-					setCwd(event.currentTarget.value);
+					setCwd(expandTilde(event.currentTarget.value));
 				}}
 			/>
 			<br />
