@@ -3,9 +3,5 @@
 		"name": "Ghost Pirate",
 		"max_hp": 50
 	},
-	{
-		"name": "Vampire Spawn",
-		"max_hp": 70,
-		"href": "https://5thsrd.org/gamemaster_rules/monsters/vampire_spawn/"
-	}
+	{ "name": "Vampire Spawn" }
 ]

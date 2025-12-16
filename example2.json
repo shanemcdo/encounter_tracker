@@ -3,8 +3,5 @@
 		"name": "Captain Catacomb",
 		"max_hp": 40
 	},
-	{
-		"name": "Tarrasque",
-		"max_hp": 1200
-	}
+	{ "name": "Tarrasque" }
 ]
