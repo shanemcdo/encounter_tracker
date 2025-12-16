@@ -14,8 +14,8 @@ async function getEncounter(filename: string): Promise<Encounter> {
 }
 
 export default function Encounter() {
-	const [searchParams, setSearchParams] = useSearchParams()
-	const encounter = createAsync(() => getEncounter(searchParams.encounter));
+	const [searchParams, ] = useSearchParams()
+	const encounter = createAsync(() => getEncounter(searchParams.encounter as string));
 	return (
 		<main>
 			<For each={encounter()}>{ creature =>
