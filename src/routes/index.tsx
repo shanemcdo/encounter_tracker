@@ -5,8 +5,12 @@ import Creature from "~/components/Creature";
 
 async function getEncounter(filename: string): Promise<Encounter> {
 	"use server";
-	const file = await readFile(filename, 'utf-8');
-	return JSON.parse(file);
+	try {
+		const file = await readFile(filename, 'utf-8');
+		return JSON.parse(file);
+	} catch {
+		return [];
+	}
 }
 
 export default function Home() {
