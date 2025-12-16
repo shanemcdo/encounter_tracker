@@ -4,6 +4,9 @@
 		"max_hp": 40
 	},
 	{ "name": "Tarrasque" },
+	{ "name": "Terry",
+		"api_index": "tarrasque"
+	},
 	{ "name": "Tarrasque" },
 	{ "name": "Tarrasque" },
 	{ "name": "Tarrasque" },
