@@ -1,6 +1,7 @@
 import { createStore } from "solid-js/store";
 
 import styles from "./CreatureDetail.module.css";
+import MaybeA from "./MaybeA";
 
 export default function CreatureDetail(props: {
 	creature: CreatureBlueprint
@@ -15,7 +16,9 @@ export default function CreatureDetail(props: {
 			classList={{
 				[styles.dead]: creature.hp <= 0,
 			}}
-		>{creature.name}</span>
+		>
+			<MaybeA href={creature.href}>{creature.name}</MaybeA>
+		</span>
 		<span
 			classList={{
 				[styles.dead]: creature.hp <= 0,
