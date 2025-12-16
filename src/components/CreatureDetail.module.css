@@ -13,3 +13,8 @@
 		cursor: pointer;
 	}
 }
+
+.dead {
+	color: var(--error-fg);
+	text-decoration: line-through;
+}

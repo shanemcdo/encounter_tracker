@@ -11,8 +11,16 @@ export default function CreatureDetail(props: {
 	});
 	let numberInput!: HTMLInputElement;
 	return <>
-		<span>{creature.name}</span>
-		<span>{creature.hp}/{creature.max_hp}</span>
+		<span
+			classList={{
+				[styles.dead]: creature.hp <= 0,
+			}}
+		>{creature.name}</span>
+		<span
+			classList={{
+				[styles.dead]: creature.hp <= 0,
+			}}
+		>{creature.hp}/{creature.max_hp}</span>
 		<input
 			class={styles.input}
 			type="number"
