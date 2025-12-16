@@ -1,0 +1,22 @@
+.grid {
+	display: grid;
+	grid-template-columns: repeat(5, auto);
+	width: auto;
+	justify-content: start;
+	gap: 0.5rem;
+
+	input {
+		background: var(--bg);
+		color: var(--fg);
+		border: solid 1px var(--border);
+		border-radius: 5px;
+
+		&[type="number"] {
+			width: 2rem;
+		}
+
+		&[type="button"] {
+			width: 4rem;
+		}
+	}
+}
