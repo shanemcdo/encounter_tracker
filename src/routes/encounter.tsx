@@ -1,5 +1,5 @@
 import { createAsync, useSearchParams } from "@solidjs/router";
-import { For, Show } from "solid-js";
+import { For } from "solid-js";
 import { readFile } from "fs/promises";
 import Creature from "~/components/Creature";
 
@@ -18,9 +18,6 @@ export default function Encounter() {
 	const encounter = createAsync(() => getEncounter(decodeURIComponent(searchParams.encounter as string)));
 	return (
 		<main>
-			<Show when={searchParams.prev}>
-				<a href={`/?path=${decodeURIComponent(searchParams.prev as string)}`}>Back</a>
-			</Show>
 			<For each={encounter()}>{ creature =>
 				<Creature creature={creature} />
 			}</For>

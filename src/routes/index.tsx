@@ -27,6 +27,19 @@ async function getHomedir() {
 	return homedir();
 }
 
+function getParent(path: string) {
+	if(path === '/' || path === '.' || path === './' || path === '/') {
+		return path;
+	}
+	const split = path.split('/');
+	let end;
+	do {
+		end = split.pop();
+	} while(end === '')
+	const result = split.join('/');
+	return result === '' ? '/' : result;
+}
+
 export default function Home() {
 	const [searchParams,] = useSearchParams();
 	const home = createAsync(getHomedir);
@@ -37,30 +50,52 @@ export default function Home() {
 	) as string;
 	const files = createAsync(() => getFiles(path()));
 	const dirs = createAsync(() => getDirs(path()));
+
+	function Directory(props: {
+		dir: string,
+		path?: string,
+	}) {
+		const newPath = () => encodeURIComponent(
+			props.path !== undefined
+			? props.path
+			:  `${path()}/${props.dir}`
+		);
+		return <li>
+			<a
+				href={`./?path=${newPath()}`}
+			>{props.dir}</a>
+		</li>
+	}
+
+	function File(props: {
+		file: string,
+	}) {
+		const newPath = () => encodeURIComponent(`${path()}/${props.file}`);
+		const prev = () => encodeURIComponent(path());
+		return <li>
+			<a
+				href={`./?path=${newPath()}&prev=${prev()}`}
+			>{props.file}</a>
+		</li>
+	}
+
 	return (
 		<main class={styles.explorer}>
-			<Show when={searchParams.prev}>
-				<a href={`/?path=${decodeURIComponent(searchParams.prev as string)}`}>Back</a>
-			</Show>
 			<h1>{path()}</h1>
 			<h2>Directories</h2>
 			<ul>
+				<Directory path={home()} dir="~" />
+				<Show when={path() !== '/'}>
+					<Directory path={getParent(path())} dir=".." />
+				</Show>
 				<For each={dirs()}>{ dir =>
-					<li>
-						<a
-							href={`./?path=${encodeURIComponent(path())}/${encodeURIComponent(dir)}&prev=${encodeURIComponent(path())}`}
-						>{dir}</a>
-					</li>
+					<Directory dir={dir} />
 				}</For>
 			</ul>
 			<h2>JSON Files</h2>
 			<ul>
 				<For each={files()}>{ file =>
-					<li>
-						<a
-							href={`encounter/?encounter=${encodeURIComponent(path())}/${encodeURIComponent(file)}&prev=${encodeURIComponent(path())}`}
-						>{file}</a>
-					</li>
+					<File file={file} />
 				}</For>
 			</ul>
 		</main>
