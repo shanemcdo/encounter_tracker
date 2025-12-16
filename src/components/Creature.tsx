@@ -5,7 +5,7 @@ interface Props {
 };
 
 export default function Creature(props: Props) {
-  return (
-  	<p>{props.creature.name}: {props.creature.max_hp}/{props.creature.max_hp}</p>
-  );
+	return (
+		<p>{props.creature.name}: {props.creature.max_hp}/{props.creature.max_hp}</p>
+	);
 }
