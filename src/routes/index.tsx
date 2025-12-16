@@ -1,6 +1,9 @@
 import { createAsync, useSearchParams } from "@solidjs/router";
 import { glob, readdir } from "fs/promises";
 import { For, Show } from "solid-js";
+import { homedir } from "os";
+
+import styles from './index.module.css';
 
 // https://stackoverflow.com/questions/18112204/get-all-directories-within-directory-nodejs
 async function getDirs(cwd: string) {
@@ -19,34 +22,47 @@ async function getFiles(cwd: string) {
 	return result;
 }
 
-async function getCwd() {
+async function getHomedir() {
 	"use server";
-	return process.cwd();
+	return homedir();
 }
 
 export default function Home() {
 	const [searchParams,] = useSearchParams();
-	const cwd = createAsync(() => getCwd());
+	const home = createAsync(getHomedir);
 	const path = () => (
 		(searchParams.path ? decodeURIComponent(searchParams.path as string) : null )
+		?? home()
 		?? "/"
 	) as string;
 	const files = createAsync(() => getFiles(path()));
 	const dirs = createAsync(() => getDirs(path()));
 	return (
-		<main>
+		<main class={styles.explorer}>
 			<Show when={searchParams.prev}>
 				<a href={`/?path=${decodeURIComponent(searchParams.prev as string)}`}>Back</a>
 			</Show>
-			<p>{path()}</p>
-			<br />
-			<For each={dirs()}>{ dir =>
-				<a href={`./?path=${encodeURIComponent(path())}/${encodeURIComponent(dir)}&prev=${encodeURIComponent(path())}`}>{dir}</a>
-			}</For>
-			<br />
-			<For each={files()}>{ file =>
-				<a href={`encounter/?encounter=${encodeURIComponent(path())}/${encodeURIComponent(file)}&prev=${encodeURIComponent(path())}`}>{file}</a>
-			}</For>
+			<h1>{path()}</h1>
+			<h2>Directories</h2>
+			<ul>
+				<For each={dirs()}>{ dir =>
+					<li>
+						<a
+							href={`./?path=${encodeURIComponent(path())}/${encodeURIComponent(dir)}&prev=${encodeURIComponent(path())}`}
+						>{dir}</a>
+					</li>
+				}</For>
+			</ul>
+			<h2>JSON Files</h2>
+			<ul>
+				<For each={files()}>{ file =>
+					<li>
+						<a
+							href={`encounter/?encounter=${encodeURIComponent(path())}/${encodeURIComponent(file)}&prev=${encodeURIComponent(path())}`}
+						>{file}</a>
+					</li>
+				}</For>
+			</ul>
 		</main>
 	);
 }
