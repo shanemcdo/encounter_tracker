@@ -17,6 +17,21 @@ function getReferencePageByName(name: string) {
 	return name.toLocaleLowerCase().replace(' ', '_')
 }
 
+const fetched: Record<string, any> = {};
+async function memoFetch(url: string) {
+	if(url in fetched) {
+		return fetched[url];
+	}
+	console.count('fetching');
+	const res = await fetch(url);
+	if(!res.ok) {
+		return [false, null];
+	}
+	const json = await res.json();
+	fetched[url] = [true, json];
+	return fetched[url];
+}
+
 async function getEncounter(filename: string): Promise<Encounter> {
 	"use server";
 	try {
@@ -26,9 +41,8 @@ async function getEncounter(filename: string): Promise<Encounter> {
 			for(const obj of encounters) {
 				const index = obj.api_index ?? getIndexFromName(obj.name ?? '');
 				if(index) {
-					const res = await fetch(`${API_URL}${index}`);
-					if(!res.ok) continue;
-					const json = await res.json();
+					const [ok, json] = await memoFetch(`${API_URL}${index}`);
+					if(!ok) continue;
 					if(obj.name === undefined) obj.name = json.name;
 					if(obj.max_hp === undefined) obj.max_hp = json.hit_points;
 					if(obj.href === undefined) obj.href = `${REFERENCE_URL}${getReferencePageByName(json.name)}`;
