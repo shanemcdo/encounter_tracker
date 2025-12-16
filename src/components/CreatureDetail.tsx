@@ -1,8 +1,8 @@
 import { createStore } from "solid-js/store";
 
-import styles from "./Creature.module.css";
+import styles from "./CreatureDetail.module.css";
 
-export default function Creature(props: {
+export default function CreatureDetail(props: {
 	creature: CreatureBlueprint
 }) {
 	const [creature, setCreature] = createStore<CreatureInstance>({

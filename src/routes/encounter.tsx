@@ -1,7 +1,7 @@
 import { createAsync, useSearchParams } from "@solidjs/router";
 import { For, Show } from "solid-js";
 import { readFile } from "fs/promises";
-import Creature from "~/components/Creature";
+import CreatureDetail from "~/components/CreatureDetail";
 
 import styles from "./encounter.module.css";
 
@@ -25,7 +25,7 @@ export default function Encounter() {
 			</Show>
 			<div class={styles.grid}>
 				<For each={encounter()}>{ creature =>
-					<Creature creature={creature} />
+					<CreatureDetail creature={creature} />
 				}</For>
 			</div>
 		</main>
