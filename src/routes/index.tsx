@@ -1,24 +1,18 @@
-import { createAsync } from "@solidjs/router";
-import { For } from "solid-js";
-import { readFile } from "fs/promises";
-import Creature from "~/components/Creature";
-
-async function getEncounter(filename: string): Promise<Encounter> {
-	"use server";
-	try {
-		const file = await readFile(filename, 'utf-8');
-		return JSON.parse(file);
-	} catch {
-		return [];
-	}
-}
-
 export default function Home() {
-	const encounter = createAsync(() => getEncounter('example.json'));
 	return (
 		<main>
-			<For each={encounter()}>{ creature =>
-				<Creature creature={creature} />
-			}</For>
+			<form
+				action="/encounter"
+				method="get"
+			>
+				<label for="encounter">Encounter:</label>
+				<input
+					type="file"
+					id="encounter"
+					name="encounter"
+					accept=".json"
+				/>
+				<button type="submit">Submit</button>
+			</form>
 		</main>
 	); }
