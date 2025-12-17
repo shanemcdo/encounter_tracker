@@ -18,9 +18,8 @@ const writeJSONAction = action(async (filepath: string, data: any) => {
 
 export default function Home() {
 	const [searchParams,] = useSearchParams();
-	const path = () => searchParams.path
-		? decodeURIComponent(searchParams.path as string)
-		: undefined;
+	const path = () => searchParams.path &&
+		decodeURIComponent(searchParams.path as string)
 
 	const [name, setName] = createSignal('untitled encounter');
 	const [creatures, setCreatures] = createStore<CreatureBlueprint[]>([]);
