@@ -28,4 +28,8 @@ input {
 	color: var(--fg);
 	border: solid 1px var(--border);
 	border-radius: 5px;
+
+	&[type="button"] {
+		cursor: pointer;
+	}
 }
