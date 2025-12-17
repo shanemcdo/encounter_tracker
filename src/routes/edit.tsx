@@ -50,7 +50,8 @@ export default function Edit() {
 				type='button'
 				value='Delete'
 				onclick={async () => {
-					await deleteFile(newFilePath());
+					if(confirm(`Are you sure you want to delete file "${newFilePath()}"`))
+						await deleteFile(newFilePath());
 				}}
 			/>
 			<h2>Creatures</h2>
