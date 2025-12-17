@@ -98,6 +98,7 @@ export default function Home() {
 					<File file={file} />
 				}</For>
 			</ul>
+			<a href={`new/?path=${encodeURIComponent(path())}`}>Create New</a>
 		</main>
 	);
 }

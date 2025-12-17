@@ -3,6 +3,7 @@ import { Title } from "@solidjs/meta";
 import { For, Show } from "solid-js";
 import { readFile } from "fs/promises";
 import CreatureDetail from "~/components/CreatureDetail";
+import Back from "~/components/Back";
 
 import styles from "./encounter.module.css";
 
@@ -66,9 +67,7 @@ export default function Encounter() {
 	}
 	return (
 		<main>
-			<Show when={searchParams.prev}>
-				<a href={`../?path=${encodeURIComponent(searchParams.prev as string)}`}>Back</a>
-			</Show>
+			<Back path={searchParams.prev as string | undefined} />
 			<Show when={name()}>
 				<Title>{name()}</Title>
 				<h1 class={styles.title}>{name()}</h1>
