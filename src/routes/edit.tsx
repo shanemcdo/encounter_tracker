@@ -1,7 +1,7 @@
 import { createAsync, useSearchParams } from '@solidjs/router';
 import { createStore } from 'solid-js/store';
 import { For, untrack, createSignal, createEffect } from 'solid-js';
-import { getParent, getEncounter, getName, writeJSON, deleteFile } from '~/utils';
+import { getParent, getEncounter, getName, writeJSON, deleteFile, getIndexFromName, getReferenceURL, fetchMonsterAPI } from '~/utils';
 import Back from '~/components/Back';
 
 import styles from './edit.module.css';
@@ -11,7 +11,7 @@ export default function Edit() {
 	const path = () => decodeURIComponent(searchParams.path as string);
 	const [name, setName] = createSignal(getName(path()));
 	const newFilePath = () => `${getParent(path())}/${name()}.json`;
-	const [creatures, setCreatures] = createStore<CreatureBlueprint[]>([]);
+	const [creatures, setCreatures] = createStore<CreaturePartial[]>([]);
 	const encounter = createAsync(() => getEncounter(path()));
 
 	createEffect(() => {
@@ -19,7 +19,7 @@ export default function Edit() {
 	})
 
 	return (
-		<main class={styles.edit}>
+		<main>
 			<Back path={path() && getParent(path()!)} />
 			<br />
 			<a href={`/encounter/?path=${encodeURIComponent(newFilePath())}`}>Play</a>
@@ -46,26 +46,87 @@ export default function Edit() {
 				}}
 			/>
 			<h2>Creatures</h2>
-			<ul>
-				<For each={creatures}>{ (creature, i) =>
-					<>
+			<div class={styles.grid}>
+				<label>Name</label>
+				<label>Max HP</label>
+				<label>HP</label>
+				<label>href</label>
+				<label>API Index</label>
+				<label></label>
+				<For each={creatures}>{ (creature, i) => {
+					return <>
 						<input
 							type='text'
-							value={creature.name}
+							value={creature.name ?? ''}
 							onchange={event => {
 								setCreatures(i(), 'name', event.currentTarget.value);
 							}}
 						/>
-					</>
-				}</For>
+						<input
+							type='number'
+							value={creature.max_hp}
+							onchange={event => {
+								setCreatures(i(), 'max_hp', event.currentTarget.valueAsNumber);
+							}}
+						/>
+						<input
+							type='number'
+							value={creature.hp}
+							onchange={event => {
+								setCreatures(i(), 'hp', event.currentTarget.valueAsNumber);
+							}}
+						/>
+						<input
+							type='text'
+							value={creature.href ?? ''}
+							onchange={event => {
+								setCreatures(i(), 'href', event.currentTarget.value);
+							}}
+						/>
+						<input
+							type='text'
+							value={creature.api_index ?? ''}
+							onchange={event => {
+								setCreatures(i(), 'api_index', event.currentTarget.value);
+							}}
+						/>
+						<input
+							type='button'
+							value='fetch'
+							onclick={async () => {
+								console.table({...creature})
+								if(
+									(creature.name ?? '') === ''
+									&& (creature.api_index ?? '') === ''
+								) return;
+
+								if((creature.api_index ?? '') === '') {
+									setCreatures(i(), 'api_index', getIndexFromName(creature.name!));
+								}
+								const [ok, json] = await fetchMonsterAPI(creature.api_index!);
+								if(ok) {
+									if((creature.name ?? '') === '') setCreatures(i(), 'name', json.name);
+									if((creature.max_hp ?? 0) === 0) setCreatures(i(), 'max_hp', json.hit_points);
+								}
+
+								if(
+									(creature.href ?? '') === ''
+									&& (creature.name ?? '') !== ''
+								) {
+									setCreatures(i(), 'href', getReferenceURL(creature.name!));
+								}
+							}}
+						/>
+					</>;
+				}}</For>
 				<input
 					type='button'
 					value='New Creature'
 					onclick={() => {
-						setCreatures(creatures.length, { 'name': '' });
+						setCreatures(creatures.length, { });
 					}}
 				/>
-			</ul>
+			</div>
 		</main>
 	);
 }

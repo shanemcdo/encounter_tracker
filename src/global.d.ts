@@ -5,8 +5,10 @@ interface CreatureBlueprint {
 	max_hp: number,
 	hp?: number,
 	href?: string,
-	api?: string,
+	api_index?: string,
 }
+
+type CreaturePartial = Partial<CreatureBlueprint>;
 
 type CreatureInstance = CreatureBlueprint & {
 	hp: number,

@@ -3,7 +3,7 @@ import { writeFile, readFile, unlink } from 'fs/promises';
 const API_URL = 'https://www.dnd5eapi.co/api/2014/monsters/';
 const REFERENCE_URL = 'https://5thsrd.org/gamemaster_rules/monsters/';
 
-function getIndexFromName(name: string) {
+export function getIndexFromName(name: string) {
 	return name.toLocaleLowerCase().replace(' ', '-')
 }
 
@@ -11,23 +11,15 @@ function getReferencePageByName(name: string) {
 	return name.toLocaleLowerCase().replace(' ', '_')
 }
 
+export function getReferenceURL(name: string) {
+	return REFERENCE_URL + getReferencePageByName(name);
+}
+
 export async function getEncounter(filename: string): Promise<Encounter> {
 	"use server";
 	try {
 		const file = await readFile(filename, 'utf-8');
 		const encounters = JSON.parse(file);
-		if(Array.isArray(encounters)) {
-			for(const obj of encounters) {
-				const index = obj.api_index ?? getIndexFromName(obj.name ?? '');
-				if(index) {
-					const [ok, json] = await memoFetch(`${API_URL}${index}`);
-					if(!ok) continue;
-					if(obj.name === undefined) obj.name = json.name;
-					if(obj.max_hp === undefined) obj.max_hp = json.hit_points;
-					if(obj.href === undefined) obj.href = `${REFERENCE_URL}${getReferencePageByName(json.name)}`;
-				}
-			}
-		}
 		return encounters;
 	} catch(e) {
 		console.error(e)
@@ -47,6 +39,10 @@ async function memoFetch(url: string) {
 	const json = await res.json();
 	fetched[url] = [true, json];
 	return fetched[url];
+}
+
+export async function fetchMonsterAPI(index: string) {
+	return await memoFetch(`${API_URL}${index}`);
 }
 
 export function getParent(path: string) {
