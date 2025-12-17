@@ -1,26 +1,26 @@
 body {
-  font-family: Gordita, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  --bg-dark: hsl(0, 0%, 0%);
-  --bg: hsl(0, 0%, 5%);
-  --bg-light: hsl(0, 0%, 10%);
-  --border: hsl(0, 0%, 40%);
-  --text-muted: hsl(0, 0%, 70%);
-  --text: hsl(0, 0%, 95%);
-  --error-bg: hsl(0, 100%, 20%);
-  --error-fg: hsl(0, 100%, 50%);
-  background: var(--bg-dark);
-  color: var(--text);
+	font-family: Gordita, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+	--bg-dark: hsl(0, 0%, 0%);
+	--bg: hsl(0, 0%, 5%);
+	--bg-light: hsl(0, 0%, 10%);
+	--border: hsl(0, 0%, 40%);
+	--text-muted: hsl(0, 0%, 70%);
+	--text: hsl(0, 0%, 95%);
+	--error-bg: hsl(0, 100%, 20%);
+	--error-fg: hsl(0, 100%, 50%);
+	background: var(--bg-dark);
+	color: var(--text);
 
-  @media (prefers-color-scheme: light) {
-    --bg-dark: hsl(0, 0%, 85%);
-    --bg: hsl(0, 0%, 90%);
-    --bg-light: hsl(0, 0%, 95%);
-    --border: hsl(0, 0%, 60%);
-    --text-muted: hsl(0, 0%, 20%);
-    --text: hsl(0, 0%, 10%);
-    --error-bg: hsl(0, 100%, 80%);
-    --error-fg: hsl(0, 100%, 50%);
-  }
+	@media (prefers-color-scheme: light) {
+		--bg-dark: hsl(0, 0%, 85%);
+		--bg: hsl(0, 0%, 90%);
+		--bg-light: hsl(0, 0%, 95%);
+		--border: hsl(0, 0%, 60%);
+		--text-muted: hsl(0, 0%, 20%);
+		--text: hsl(0, 0%, 10%);
+		--error-bg: hsl(0, 100%, 80%);
+		--error-fg: hsl(0, 100%, 50%);
+	}
 }
 
 input {
