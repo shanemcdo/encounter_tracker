@@ -4,6 +4,7 @@ import { createStore } from 'solid-js/store';
 import { For, untrack, createSignal, createEffect, Show } from 'solid-js';
 import { getParent, getEncounter, getName, writeJSON, deleteFile, getIndexFromName, getReferenceURL, fetchMonsterAPI } from '~/utils';
 import Back from '~/components/Back';
+import MaybeTitle from '~/components/MaybeTitle';
 
 import styles from './edit.module.css';
 
@@ -25,10 +26,7 @@ export default function Edit() {
 			<Back path={path() && getParent(path()!)} />
 			<br />
 			<a href={`/encounter/?path=${encodeURIComponent(newFilePath())}`}>Play</a>
-			<Show when={name()}>
-				<Title>{name()}</Title>
-				<h1 class={styles.title}>{name()}</h1>
-			</Show>
+			<MaybeTitle text={name()} />
 			<input
 				type='text'
 				value={untrack(name)}

@@ -1,9 +1,9 @@
 import { createAsync, useSearchParams } from '@solidjs/router';
-import { Title } from '@solidjs/meta';
 import { For, Show } from 'solid-js';
 import CreatureDetail from '~/components/CreatureDetail';
 import { getEncounter, getName, getParent } from '~/utils';
 import Back from '~/components/Back';
+import MaybeTitle from '~/components/MaybeTitle';
 
 import styles from './encounter.module.css';
 
@@ -17,10 +17,7 @@ export default function Encounter() {
 			<Back path={getParent(path())} />
 			<br />
 			<a href={`/edit/?path=${encodeURIComponent(path())}`}>Edit</a>
-			<Show when={name()}>
-				<Title>{name()}</Title>
-				<h1 class={styles.title}>{name()}</h1>
-			</Show>
+			<MaybeTitle text={name()} />
 			<div class={styles.grid}>
 				<For each={encounter()}>{ creature =>
 					<CreatureDetail creature={creature} />
