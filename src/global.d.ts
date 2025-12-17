@@ -1,7 +1,7 @@
 /// <reference types="@solidjs/start/env" />
 
 interface CreatureBlueprint {
-	name?: string,
+	name: string,
 	max_hp: number,
 	hp?: number,
 	href?: string,
