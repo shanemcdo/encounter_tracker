@@ -17,7 +17,7 @@ export default function Encounter() {
 		<main>
 			<Back path={parent()} />
 			<br />
-			<a href={`/new/?path=${searchParams.path}`}>Edit</a>
+			<a href={`/edit/?path=${searchParams.path}`}>Edit</a>
 			<Show when={name()}>
 				<Title>{name()}</Title>
 				<h1 class={styles.title}>{name()}</h1>

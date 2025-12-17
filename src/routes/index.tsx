@@ -85,7 +85,7 @@ export default function Home() {
 					<File file={file} />
 				}</For>
 			</ul>
-			<a href={`new/?path=${encodeURIComponent(path())}/untitled%20encounter.json`}>Create New</a>
+			<a href={`edit/?path=${encodeURIComponent(path())}/untitled%20encounter.json`}>Create New</a>
 		</main>
 	);
 }

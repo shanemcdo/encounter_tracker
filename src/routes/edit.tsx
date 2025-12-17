@@ -4,7 +4,7 @@ import { For, Show, untrack, createSignal, createEffect } from "solid-js";
 import { getParent, getEncounter, getName } from "~/utils";
 import Back from "~/components/Back";
 
-import styles from './new.module.css';
+import styles from './edit.module.css';
 
 const writeJSONAction = action(async (filepath: string, data: any) => {
 	await fetch('/api/save-json', {
@@ -17,7 +17,7 @@ const writeJSONAction = action(async (filepath: string, data: any) => {
 	});
 }, "writeJSON");
 
-export default function New() {
+export default function Edit() {
 	const [searchParams,] = useSearchParams();
 	const path = () => decodeURIComponent(searchParams.path as string);
 	const [name, setName] = createSignal(getName(path()));
@@ -30,7 +30,7 @@ export default function New() {
 	})
 
 	return (
-		<main class={styles.new}>
+		<main class={styles.edit}>
 			<Back path={path() && getParent(path()!)} />
 			<br />
 			<a href={`/encounter/?path=${searchParams.path}`}>Play</a>
