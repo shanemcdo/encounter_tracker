@@ -59,10 +59,9 @@ export default function Home() {
 		file: string,
 	}) {
 		const newPath = () => encodeURIComponent(`${path()}/${props.file}`);
-		const prev = () => encodeURIComponent(path());
 		return <li>
 			<a
-				href={`encounter/?encounter=${newPath()}&prev=${prev()}`}
+				href={`encounter/?path=${newPath()}`}
 			>{props.file}</a>
 		</li>
 	}

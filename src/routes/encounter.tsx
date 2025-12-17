@@ -3,6 +3,7 @@ import { Title } from "@solidjs/meta";
 import { For, Show } from "solid-js";
 import { readFile } from "fs/promises";
 import CreatureDetail from "~/components/CreatureDetail";
+import { getParent } from "~/utils";
 import Back from "~/components/Back";
 
 import styles from "./encounter.module.css";
@@ -58,16 +59,18 @@ async function getEncounter(filename: string): Promise<Encounter> {
 
 export default function Encounter() {
 	const [searchParams, ] = useSearchParams()
-	const encounter = createAsync(() => getEncounter(decodeURIComponent(searchParams.encounter as string)));
+	const path = () => decodeURIComponent(searchParams.path as string);
+	const encounter = createAsync(() => getEncounter(path()));
 	const name = () => {
 		if(typeof searchParams.encounter !== 'string') {
 			return null;
 		}
 		return searchParams.encounter.split('/').at(-1)?.split('.')[0];
 	}
+	const parent = () => encodeURIComponent(getParent(path()));
 	return (
 		<main>
-			<Back path={searchParams.prev as string | undefined} />
+			<Back path={parent()} />
 			<Show when={name()}>
 				<Title>{name()}</Title>
 				<h1 class={styles.title}>{name()}</h1>
