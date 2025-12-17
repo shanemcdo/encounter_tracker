@@ -47,14 +47,17 @@ export default function Edit() {
 			/>
 			<h2>Creatures</h2>
 			<div class={styles.grid}>
+				<label>ID</label>
 				<label>Name</label>
 				<label>Max HP</label>
 				<label>HP</label>
 				<label>href</label>
 				<label>API Index</label>
-				<label></label>
+				<label class={styles.last_label}>Buttons</label>
 				<For each={creatures}>{ (creature, i) => {
+					let fetchButton!: HTMLInputElement;
 					return <>
+						<span>{i() + 1}</span>
 						<input
 							type='text'
 							value={creature.name ?? ''}
@@ -93,8 +96,8 @@ export default function Edit() {
 						<input
 							type='button'
 							value='fetch'
+							ref={fetchButton}
 							onclick={async () => {
-								console.table({...creature})
 								if(
 									(creature.name ?? '') === ''
 									&& (creature.api_index ?? '') === ''
@@ -117,16 +120,32 @@ export default function Edit() {
 								}
 							}}
 						/>
+						<input
+							type='button'
+							value='duplicate'
+							ref={fetchButton}
+							onclick={() => {
+								setCreatures(creatures.length, { ...creature });
+							}}
+						/>
+						<input
+							type='button'
+							value='Delete'
+							ref={fetchButton}
+							onclick={() => {
+								setCreatures([...creatures.slice(0, i()), ...creatures.slice(i() + 1, creatures.length)]);
+							}}
+						/>
 					</>;
 				}}</For>
-				<input
-					type='button'
-					value='New Creature'
-					onclick={() => {
-						setCreatures(creatures.length, { });
-					}}
-				/>
 			</div>
+			<input
+				type='button'
+				value='New Creature'
+				onclick={() => {
+					setCreatures(creatures.length, { });
+				}}
+			/>
 		</main>
 	);
 }
