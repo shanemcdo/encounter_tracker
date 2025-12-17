@@ -1,4 +1,4 @@
-import { writeFile, readFile } from "fs/promises";
+import { writeFile, readFile, unlink } from "fs/promises";
 
 const API_URL = 'https://www.dnd5eapi.co/api/2014/monsters/';
 const REFERENCE_URL = 'https://5thsrd.org/gamemaster_rules/monsters/';
@@ -69,4 +69,9 @@ export function getName(path: string) {
 export async function writeJSON(path: string, data: any) {
 	"use server";
 	await writeFile(path, JSON.stringify(data), 'utf-8');
+}
+
+export async function deleteFile(path: string) {
+	"use server";
+	await unlink(path)
 }

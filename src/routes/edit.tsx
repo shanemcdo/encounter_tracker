@@ -1,7 +1,7 @@
 import { action, createAsync, useAction, useSearchParams } from "@solidjs/router";
 import { createStore } from "solid-js/store";
 import { For, Show, untrack, createSignal, createEffect } from "solid-js";
-import { getParent, getEncounter, getName, writeJSON } from "~/utils";
+import { getParent, getEncounter, getName, writeJSON, deleteFile } from "~/utils";
 import Back from "~/components/Back";
 
 import styles from './edit.module.css';
@@ -10,6 +10,7 @@ export default function Edit() {
 	const [searchParams,] = useSearchParams();
 	const path = () => decodeURIComponent(searchParams.path as string);
 	const [name, setName] = createSignal(getName(path()));
+	const newFilePath = () => `${getParent(path())}/${name()}.json`;
 	const [creatures, setCreatures] = createStore<CreatureBlueprint[]>([]);
 	const encounter = createAsync(() => getEncounter(path()));
 
@@ -34,7 +35,14 @@ export default function Edit() {
 				type="button"
 				value="Save"
 				onclick={async () => {
-					await writeJSON(`${getParent(path())}/${name()}.json`, creatures);
+					await writeJSON(newFilePath(), creatures);
+				}}
+			/>
+			<input
+				type="button"
+				value="Delete"
+				onclick={async () => {
+					await deleteFile(newFilePath());
 				}}
 			/>
 			<h2>Creatures</h2>
