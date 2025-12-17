@@ -12,7 +12,6 @@ body {
   color: var(--text);
 
   @media (prefers-color-scheme: light) {
-    --test: "true";
     --bg-dark: hsl(0, 0%, 85%);
     --bg: hsl(0, 0%, 90%);
     --bg-light: hsl(0, 0%, 95%);
