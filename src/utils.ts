@@ -1,4 +1,4 @@
-import { writeFile, readFile, unlink } from "fs/promises";
+import { writeFile, readFile, unlink } from 'fs/promises';
 
 const API_URL = 'https://www.dnd5eapi.co/api/2014/monsters/';
 const REFERENCE_URL = 'https://5thsrd.org/gamemaster_rules/monsters/';

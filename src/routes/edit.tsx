@@ -1,8 +1,8 @@
-import { action, createAsync, useAction, useSearchParams } from "@solidjs/router";
-import { createStore } from "solid-js/store";
-import { For, Show, untrack, createSignal, createEffect } from "solid-js";
-import { getParent, getEncounter, getName, writeJSON, deleteFile } from "~/utils";
-import Back from "~/components/Back";
+import { action, createAsync, useAction, useSearchParams } from '@solidjs/router';
+import { createStore } from 'solid-js/store';
+import { For, Show, untrack, createSignal, createEffect } from 'solid-js';
+import { getParent, getEncounter, getName, writeJSON, deleteFile } from '~/utils';
+import Back from '~/components/Back';
 
 import styles from './edit.module.css';
 

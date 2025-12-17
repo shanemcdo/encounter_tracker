@@ -1,4 +1,4 @@
-import { mergeProps, Show } from "solid-js";
+import { mergeProps, Show } from 'solid-js';
 
 export default function Back(p: {
 	path?: string,

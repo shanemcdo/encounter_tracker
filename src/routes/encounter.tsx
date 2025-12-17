@@ -1,11 +1,11 @@
-import { createAsync, useSearchParams } from "@solidjs/router";
-import { Title } from "@solidjs/meta";
-import { For, Show } from "solid-js";
-import CreatureDetail from "~/components/CreatureDetail";
-import { getEncounter, getName, getParent } from "~/utils";
-import Back from "~/components/Back";
+import { createAsync, useSearchParams } from '@solidjs/router';
+import { Title } from '@solidjs/meta';
+import { For, Show } from 'solid-js';
+import CreatureDetail from '~/components/CreatureDetail';
+import { getEncounter, getName, getParent } from '~/utils';
+import Back from '~/components/Back';
 
-import styles from "./encounter.module.css";
+import styles from './encounter.module.css';
 
 export default function Encounter() {
 	const [searchParams, ] = useSearchParams()

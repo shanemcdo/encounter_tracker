@@ -1,4 +1,4 @@
-import { children, ParentProps, Show } from "solid-js";
+import { children, ParentProps, Show } from 'solid-js';
 
 export default function MaybeA(props: ParentProps<{
 	href?: string,
