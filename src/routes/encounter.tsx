@@ -11,13 +11,12 @@ export default function Encounter() {
 	const [searchParams, ] = useSearchParams()
 	const path = () => decodeURIComponent(searchParams.path as string);
 	const encounter = createAsync(() => getEncounter(path()));
-	const name = () => searchParams.encounter && getName(searchParams.encounter as string);
-	const parent = () => encodeURIComponent(getParent(path()));
+	const name = () => getName(path());
 	return (
 		<main>
-			<Back path={parent()} />
+			<Back path={getParent(path())} />
 			<br />
-			<a href={`/edit/?path=${searchParams.path}`}>Edit</a>
+			<a href={`/edit/?path=${encodeURIComponent(path())}`}>Edit</a>
 			<Show when={name()}>
 				<Title>{name()}</Title>
 				<h1 class={styles.title}>{name()}</h1>
