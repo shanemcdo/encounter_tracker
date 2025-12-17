@@ -56,6 +56,13 @@ export default function Home() {
 						/>
 					</>
 				}</For>
+				<input
+					type="button"
+					value="New Creature"
+					onclick={() => {
+						setCreatures(creatures.length, { 'name': '' });
+					}}
+				/>
 			</ul>
 		</main>
 	);
