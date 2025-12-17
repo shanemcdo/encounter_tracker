@@ -67,7 +67,7 @@ export default function Encounter() {
 	return (
 		<main>
 			<Show when={searchParams.prev}>
-				<a href={`../?path=${searchParams.prev as string}`}>Back</a>
+				<a href={`../?path=${encodeURIComponent(searchParams.prev as string)}`}>Back</a>
 			</Show>
 			<Show when={name()}>
 				<Title>{name()}</Title>
