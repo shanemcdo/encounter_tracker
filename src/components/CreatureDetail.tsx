@@ -19,7 +19,7 @@ export default function CreatureDetail(props: {
 		>
 			<MaybeA
 				href={creature.href}
-				target="_blank"
+				target='_blank'
 			>{creature.name}</MaybeA>
 		</span>
 		<span
@@ -29,20 +29,20 @@ export default function CreatureDetail(props: {
 		>{creature.hp}/{creature.max_hp}</span>
 		<input
 			class={styles.input}
-			type="number"
+			type='number'
 			ref={numberInput}
 			value={0}
 		/>
 		<input
 			class={styles.input}
-			type="button" 
-			value="Damage"
+			type='button'
+			value='Damage'
 			onclick={() => setCreature('hp', value => value - numberInput.valueAsNumber)}
 		/>
 		<input
 			class={styles.input}
-			type="button" 
-			value="heal"
+			type='button'
+			value='heal'
 			onclick={() => setCreature('hp', value => value + numberInput.valueAsNumber)}
 		/>
 	</>;

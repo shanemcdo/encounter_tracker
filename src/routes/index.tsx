@@ -34,7 +34,7 @@ export default function Home() {
 	const path = () => (
 		(searchParams.path ? decodeURIComponent(searchParams.path as string) : null )
 		?? home()
-		?? "/"
+		?? '/'
 	) as string;
 	const files = createAsync(() => getFiles(path()));
 	const dirs = createAsync(() => getDirs(path()));
@@ -71,9 +71,9 @@ export default function Home() {
 			<h1>{path()}</h1>
 			<h2>Directories</h2>
 			<ul>
-				<Directory path={home()} dir="~" />
+				<Directory path={home()} dir='~' />
 				<Show when={path() !== '/'}>
-					<Directory path={getParent(path())} dir=".." />
+					<Directory path={getParent(path())} dir='..' />
 				</Show>
 				<For each={dirs()}>{ dir =>
 					<Directory dir={dir} />

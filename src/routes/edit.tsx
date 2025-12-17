@@ -25,22 +25,22 @@ export default function Edit() {
 			<a href={`/encounter/?path=${searchParams.path}`}>Play</a>
 			<br />
 			<input
-				type="text"
+				type='text'
 				value={untrack(name)}
 				onchange={event =>{
 					setName(event.currentTarget.value);
 				}}
 			/>
 			<input
-				type="button"
-				value="Save"
+				type='button'
+				value='Save'
 				onclick={async () => {
 					await writeJSON(newFilePath(), creatures);
 				}}
 			/>
 			<input
-				type="button"
-				value="Delete"
+				type='button'
+				value='Delete'
 				onclick={async () => {
 					await deleteFile(newFilePath());
 				}}
@@ -50,7 +50,7 @@ export default function Edit() {
 				<For each={creatures}>{ (creature, i) =>
 					<>
 						<input
-							type="text"
+							type='text'
 							value={creature.name}
 							onchange={event => {
 								setCreatures(i(), 'name', event.currentTarget.value);
@@ -59,8 +59,8 @@ export default function Edit() {
 					</>
 				}</For>
 				<input
-					type="button"
-					value="New Creature"
+					type='button'
+					value='New Creature'
 					onclick={() => {
 						setCreatures(creatures.length, { 'name': '' });
 					}}
