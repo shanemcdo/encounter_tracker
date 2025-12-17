@@ -1,6 +1,7 @@
-import { action, useAction, useSearchParams } from "@solidjs/router";
+import { action, createAsync, useAction, useSearchParams } from "@solidjs/router";
 import { createStore } from "solid-js/store";
-import { For, Show, untrack, createSignal } from "solid-js";
+import { For, Show, untrack, createSignal, createEffect } from "solid-js";
+import { getParent, getEncounter, getName } from "~/utils";
 import Back from "~/components/Back";
 
 import styles from './new.module.css';
@@ -16,18 +17,24 @@ const writeJSONAction = action(async (filepath: string, data: any) => {
 	});
 }, "writeJSON");
 
-export default function Home() {
+export default function New() {
 	const [searchParams,] = useSearchParams();
-	const path = () => searchParams.path &&
-		decodeURIComponent(searchParams.path as string)
-
-	const [name, setName] = createSignal('untitled encounter');
-	const [creatures, setCreatures] = createStore<CreatureBlueprint[]>([]);
+	const path = () => decodeURIComponent(searchParams.path as string);
+	const [name, setName] = createSignal(getName(path()));
 	const writeJSON = useAction(writeJSONAction);
+	const [creatures, setCreatures] = createStore<CreatureBlueprint[]>([]);
+	const encounter = createAsync(() => getEncounter(path()));
+
+	createEffect(() => {
+		setCreatures(encounter() ?? []);
+	})
 
 	return (
 		<main class={styles.new}>
-			<Back path={path()} />
+			<Back path={path() && getParent(path()!)} />
+			<br />
+			<a href={`/encounter/?path=${searchParams.path}`}>Play</a>
+			<br />
 			<input
 				type="text"
 				value={untrack(name)}
@@ -39,7 +46,7 @@ export default function Home() {
 				type="button"
 				value="Save"
 				onclick={async () => {
-					await writeJSON(`${path()}/${name()}.json`, creatures);
+					await writeJSON(`${getParent(path())}/${name()}.json`, creatures);
 				}}
 			/>
 			<h2>Creatures</h2>
