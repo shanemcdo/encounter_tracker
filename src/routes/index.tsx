@@ -3,6 +3,7 @@ import { glob, readdir } from 'fs/promises';
 import { For, Show } from 'solid-js';
 import { homedir } from 'os';
 import { getParent } from '~/utils';
+import MaybeTitle from '~/components/MaybeTitle';
 
 import styles from './index.module.css';
 
@@ -68,7 +69,7 @@ export default function Home() {
 
 	return (
 		<main class={styles.explorer}>
-			<h1>{path()}</h1>
+			<MaybeTitle text={path()} />
 			<h2>Directories</h2>
 			<ul>
 				<Directory path={home()} dir='~' />
