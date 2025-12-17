@@ -1,6 +1,7 @@
 import { createAsync, useSearchParams } from '@solidjs/router';
+import { Title } from '@solidjs/meta';
 import { createStore } from 'solid-js/store';
-import { For, untrack, createSignal, createEffect } from 'solid-js';
+import { For, untrack, createSignal, createEffect, Show } from 'solid-js';
 import { getParent, getEncounter, getName, writeJSON, deleteFile, getIndexFromName, getReferenceURL, fetchMonsterAPI } from '~/utils';
 import Back from '~/components/Back';
 
@@ -24,7 +25,10 @@ export default function Edit() {
 			<Back path={path() && getParent(path()!)} />
 			<br />
 			<a href={`/encounter/?path=${encodeURIComponent(newFilePath())}`}>Play</a>
-			<br />
+			<Show when={name()}>
+				<Title>{name()}</Title>
+				<h1 class={styles.title}>{name()}</h1>
+			</Show>
 			<input
 				type='text'
 				value={untrack(name)}
