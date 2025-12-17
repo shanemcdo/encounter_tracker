@@ -12,7 +12,8 @@ export default function Edit() {
 	const [name, setName] = createSignal(getName(path()));
 	const newFilePath = () => `${getParent(path())}/${name()}.json`;
 	const [creatures, setCreatures] = createStore<CreaturePartial[]>([]);
-	const encounter = createAsync(() => getEncounter(path()));
+	const [encounterPath, setEncounterPath] = createSignal(path());
+	const encounter = createAsync(() => getEncounter(encounterPath()));
 
 	createEffect(() => {
 		setCreatures(encounter() ?? []);
@@ -36,6 +37,13 @@ export default function Edit() {
 				value='Save'
 				onclick={async () => {
 					await writeJSON(newFilePath(), creatures);
+				}}
+			/>
+			<input
+				type='button'
+				value='load'
+				onclick={() => {
+					setEncounterPath(newFilePath());
 				}}
 			/>
 			<input
