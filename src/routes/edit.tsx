@@ -22,7 +22,7 @@ export default function Edit() {
 		<main class={styles.edit}>
 			<Back path={path() && getParent(path()!)} />
 			<br />
-			<a href={`/encounter/?path=${searchParams.path}`}>Play</a>
+			<a href={`/encounter/?path=${encodeURIComponent(newFilePath())}`}>Play</a>
 			<br />
 			<input
 				type='text'
