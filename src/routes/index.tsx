@@ -2,8 +2,9 @@ import { createAsync, useSearchParams } from "@solidjs/router";
 import { glob, readdir } from "fs/promises";
 import { For, Show } from "solid-js";
 import { homedir } from "os";
+import { getParent } from "~/utils";
 
-import styles from './index.module.css';
+import styles from "./index.module.css";
 
 // https://stackoverflow.com/questions/18112204/get-all-directories-within-directory-nodejs
 async function getDirs(cwd: string) {
@@ -25,19 +26,6 @@ async function getFiles(cwd: string) {
 async function getHomedir() {
 	"use server";
 	return homedir();
-}
-
-function getParent(path: string) {
-	if(path === '/' || path === '.' || path === './' || path === '/') {
-		return path;
-	}
-	const split = path.split('/');
-	let end;
-	do {
-		end = split.pop();
-	} while(end === '')
-	const result = split.join('/');
-	return result === '' ? '/' : result;
 }
 
 export default function Home() {
