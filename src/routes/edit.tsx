@@ -26,141 +26,143 @@ export default function Edit() {
 			<Back path={path() && getParent(path()!)} />
 			<br />
 			<a href={`/encounter/?path=${encodeURIComponent(newFilePath())}`}>Play</a>
-			<MaybeTitle text={name()} />
-			<input
-				type='text'
-				value={untrack(name)}
-				onchange={event =>{
-					setName(event.currentTarget.value);
-				}}
-			/>
-			<input
-				type='button'
-				value='Save'
-				onclick={async () => {
-					await writeJSON(newFilePath(), creatures);
-				}}
-			/>
-			<input
-				type='button'
-				value='load'
-				onclick={() => {
-					setEncounterPath(newFilePath());
-				}}
-			/>
-			<input
-				type='button'
-				value='Delete'
-				onclick={async () => {
-					await deleteFileConfirm(newFilePath());
-				}}
-			/>
-			<br />
-			<a
-				href='https://5thsrd.org/gamemaster_rules/monster_indexes/monsters_by_cr/'
-				target="_blank"
-			>Monster Reference</a>
-			<h2>Creatures</h2>
-			<div class={styles.grid}>
-				<label>ID</label>
-				<label>Name</label>
-				<label>Max HP</label>
-				<label>HP</label>
-				<label>href</label>
-				<label>API Index</label>
-				<label class={styles.last_label}>Buttons</label>
-				<For each={creatures}>{ (creature, i) => {
-					let fetchButton!: HTMLInputElement;
-					return <>
-						<span>{i() + 1}</span>
-						<input
-							type='text'
-							value={creature.name ?? ''}
-							onchange={event => {
-								setCreatures(i(), 'name', event.currentTarget.value);
-							}}
-						/>
-						<input
-							type='number'
-							value={creature.max_hp}
-							onchange={event => {
-								setCreatures(i(), 'max_hp', event.currentTarget.valueAsNumber);
-							}}
-						/>
-						<input
-							type='number'
-							value={creature.hp}
-							onchange={event => {
-								setCreatures(i(), 'hp', event.currentTarget.valueAsNumber);
-							}}
-						/>
-						<input
-							type='text'
-							value={creature.href ?? ''}
-							onchange={event => {
-								setCreatures(i(), 'href', event.currentTarget.value);
-							}}
-						/>
-						<input
-							type='text'
-							value={creature.api_index ?? ''}
-							onchange={event => {
-								setCreatures(i(), 'api_index', event.currentTarget.value);
-							}}
-						/>
-						<input
-							type='button'
-							value='fetch'
-							ref={fetchButton}
-							onclick={async () => {
-								if(
-									(creature.name ?? '') === ''
-									&& (creature.api_index ?? '') === ''
-								) return;
+			<div class={styles.edit}>
+				<MaybeTitle text={name()} />
+				<input
+					type='text'
+					value={untrack(name)}
+					onchange={event =>{
+						setName(event.currentTarget.value);
+					}}
+				/>
+				<input
+					type='button'
+					value='Save'
+					onclick={async () => {
+						await writeJSON(newFilePath(), creatures);
+					}}
+				/>
+				<input
+					type='button'
+					value='load'
+					onclick={() => {
+						setEncounterPath(newFilePath());
+					}}
+				/>
+				<input
+					type='button'
+					value='Delete'
+					onclick={async () => {
+						await deleteFileConfirm(newFilePath());
+					}}
+				/>
+				<br />
+				<a
+					href='https://5thsrd.org/gamemaster_rules/monster_indexes/monsters_by_cr/'
+					target="_blank"
+				>Monster Reference</a>
+				<h2>Creatures</h2>
+				<div class={styles.grid}>
+					<label>ID</label>
+					<label>Name</label>
+					<label>Max HP</label>
+					<label>HP</label>
+					<label>href</label>
+					<label>API Index</label>
+					<label class={styles.last_label}>Buttons</label>
+					<For each={creatures}>{ (creature, i) => {
+						let fetchButton!: HTMLInputElement;
+						return <>
+							<span>{i() + 1}</span>
+							<input
+								type='text'
+								value={creature.name ?? ''}
+								onchange={event => {
+									setCreatures(i(), 'name', event.currentTarget.value);
+								}}
+							/>
+							<input
+								type='number'
+								value={creature.max_hp}
+								onchange={event => {
+									setCreatures(i(), 'max_hp', event.currentTarget.valueAsNumber);
+								}}
+							/>
+							<input
+								type='number'
+								value={creature.hp}
+								onchange={event => {
+									setCreatures(i(), 'hp', event.currentTarget.valueAsNumber);
+								}}
+							/>
+							<input
+								type='text'
+								value={creature.href ?? ''}
+								onchange={event => {
+									setCreatures(i(), 'href', event.currentTarget.value);
+								}}
+							/>
+							<input
+								type='text'
+								value={creature.api_index ?? ''}
+								onchange={event => {
+									setCreatures(i(), 'api_index', event.currentTarget.value);
+								}}
+							/>
+							<input
+								type='button'
+								value='fetch'
+								ref={fetchButton}
+								onclick={async () => {
+									if(
+										(creature.name ?? '') === ''
+											&& (creature.api_index ?? '') === ''
+									) return;
 
-								if((creature.api_index ?? '') === '') {
-									setCreatures(i(), 'api_index', getIndexFromName(creature.name!));
-								}
-								const [ok, json] = await fetchMonsterAPI(creature.api_index!);
-								if(ok) {
-									if((creature.name ?? '') === '') setCreatures(i(), 'name', json.name);
-									if((creature.max_hp ?? 0) === 0) setCreatures(i(), 'max_hp', json.hit_points);
-								}
+									if((creature.api_index ?? '') === '') {
+										setCreatures(i(), 'api_index', getIndexFromName(creature.name!));
+									}
+									const [ok, json] = await fetchMonsterAPI(creature.api_index!);
+									if(ok) {
+										if((creature.name ?? '') === '') setCreatures(i(), 'name', json.name);
+										if((creature.max_hp ?? 0) === 0) setCreatures(i(), 'max_hp', json.hit_points);
+									}
 
-								if(
-									(creature.href ?? '') === ''
-									&& (creature.name ?? '') !== ''
-								) {
-									setCreatures(i(), 'href', getReferenceURL(creature.name!));
-								}
-							}}
-						/>
-						<input
-							type='button'
-							value='duplicate'
-							ref={fetchButton}
-							onclick={() => {
-								setCreatures(creatures.length, { ...creature });
-							}}
-						/>
-						<input
-							type='button'
-							value='Delete'
-							ref={fetchButton}
-							onclick={() => {
-								setCreatures([...creatures.slice(0, i()), ...creatures.slice(i() + 1, creatures.length)]);
-							}}
-						/>
-					</>;
-				}}</For>
+									if(
+										(creature.href ?? '') === ''
+											&& (creature.name ?? '') !== ''
+									) {
+										setCreatures(i(), 'href', getReferenceURL(creature.name!));
+									}
+								}}
+							/>
+							<input
+								type='button'
+								value='duplicate'
+								ref={fetchButton}
+								onclick={() => {
+									setCreatures(creatures.length, { ...creature });
+								}}
+							/>
+							<input
+								type='button'
+								value='Delete'
+								ref={fetchButton}
+								onclick={() => {
+									setCreatures([...creatures.slice(0, i()), ...creatures.slice(i() + 1, creatures.length)]);
+								}}
+							/>
+						</>;
+					}}</For>
+				</div>
+				<input
+					type='button'
+					value='New Creature'
+					onclick={() => {
+						setCreatures(creatures.length, { });
+					}}
+				/>
 			</div>
-			<input
-				type='button'
-				value='New Creature'
-				onclick={() => {
-					setCreatures(creatures.length, { });
-				}}
-			/>
 		</main>
 	);
 }
