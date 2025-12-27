@@ -71,3 +71,8 @@ export async function deleteFile(path: string) {
 	"use server";
 	await unlink(path)
 }
+
+export async function deleteFileConfirm(path: string) {
+	if(confirm(`Are you sure you want to delete file "${path}"`))
+		await deleteFile(path);
+}

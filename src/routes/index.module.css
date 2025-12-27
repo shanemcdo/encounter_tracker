@@ -11,4 +11,12 @@ main.explorer {
 			text-align: left;
 		}
 	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(4, auto);
+		justify-content: center;
+		justify-items: left;
+		gap: 0 1rem;
+	}
 }

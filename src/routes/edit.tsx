@@ -2,7 +2,7 @@ import { createAsync, useSearchParams } from '@solidjs/router';
 import { Title } from '@solidjs/meta';
 import { createStore } from 'solid-js/store';
 import { For, untrack, createSignal, createEffect, Show } from 'solid-js';
-import { getParent, getEncounter, getName, writeJSON, deleteFile, getIndexFromName, getReferenceURL, fetchMonsterAPI } from '~/utils';
+import { getParent, getEncounter, getName, writeJSON, deleteFileConfirm, getIndexFromName, getReferenceURL, fetchMonsterAPI } from '~/utils';
 import Back from '~/components/Back';
 import MaybeTitle from '~/components/MaybeTitle';
 
@@ -52,8 +52,7 @@ export default function Edit() {
 				type='button'
 				value='Delete'
 				onclick={async () => {
-					if(confirm(`Are you sure you want to delete file "${newFilePath()}"`))
-						await deleteFile(newFilePath());
+					await deleteFileConfirm(newFilePath());
 				}}
 			/>
 			<h2>Creatures</h2>

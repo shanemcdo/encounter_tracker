@@ -2,7 +2,7 @@ import { createAsync, useSearchParams } from '@solidjs/router';
 import { glob, readdir } from 'fs/promises';
 import { For, Show } from 'solid-js';
 import { homedir } from 'os';
-import { getParent } from '~/utils';
+import { deleteFileConfirm, getParent } from '~/utils';
 import MaybeTitle from '~/components/MaybeTitle';
 
 import styles from './index.module.css';
@@ -60,11 +60,20 @@ export default function Home() {
 		file: string,
 	}) {
 		const newPath = () => encodeURIComponent(`${path()}/${props.file}`);
-		return <li>
+		return <>
+			<label>{props.file}</label>
 			<a
 				href={`encounter/?path=${newPath()}`}
-			>{props.file}</a>
-		</li>
+			>Play</a>
+			<a
+				href={`edit/?path=${newPath()}`}
+			>Edit</a>
+			<button
+				onclick={async () => {
+					await deleteFileConfirm(decodeURIComponent(newPath()));
+				}}
+			>Delete</button>
+		</>
 	}
 
 	return (
@@ -81,11 +90,11 @@ export default function Home() {
 				}</For>
 			</ul>
 			<h2>JSON Files</h2>
-			<ul>
+			<div class={styles.grid}>
 				<For each={files()}>{ file =>
 					<File file={file} />
 				}</For>
-			</ul>
+			</div>
 			<a href={`edit/?path=${encodeURIComponent(path() + '/untitled encounter.json')}`}>Create New</a>
 		</main>
 	);
