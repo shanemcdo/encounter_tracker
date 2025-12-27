@@ -1,6 +1,6 @@
 import { createAsync, useSearchParams } from '@solidjs/router';
 import { glob, readdir } from 'fs/promises';
-import { For, Show } from 'solid-js';
+import { For, Show, createResource } from 'solid-js';
 import { homedir } from 'os';
 import { deleteFileConfirm, getParent } from '~/utils';
 import MaybeTitle from '~/components/MaybeTitle';
@@ -37,8 +37,8 @@ export default function Home() {
 		?? home()
 		?? '/'
 	) as string;
-	const files = createAsync(() => getFiles(path()));
-	const dirs = createAsync(() => getDirs(path()));
+	const [files, { refetch: refetchFiles }] = createResource(path, getFiles);
+	const [dirs] = createResource(path, getDirs);
 
 	function Directory(props: {
 		dir: string,
@@ -71,6 +71,7 @@ export default function Home() {
 			<button
 				onclick={async () => {
 					await deleteFileConfirm(decodeURIComponent(newPath()));
+					await refetchFiles();
 				}}
 			>Delete</button>
 		</>
