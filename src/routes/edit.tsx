@@ -55,6 +55,11 @@ export default function Edit() {
 					await deleteFileConfirm(newFilePath());
 				}}
 			/>
+			<br />
+			<a
+				href='https://5thsrd.org/gamemaster_rules/monster_indexes/monsters_by_cr/'
+				target="_blank"
+			>Monster Reference</a>
 			<h2>Creatures</h2>
 			<div class={styles.grid}>
 				<label>ID</label>
