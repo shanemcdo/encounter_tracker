@@ -23,12 +23,14 @@ body {
 	}
 }
 
+button,
 input {
 	background: var(--bg);
 	color: var(--fg);
 	border: solid 1px var(--border);
 	border-radius: 5px;
 
+	&:is(button),
 	&[type="button"] {
 		cursor: pointer;
 	}
