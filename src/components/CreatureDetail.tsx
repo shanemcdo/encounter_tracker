@@ -1,7 +1,7 @@
 import { createStore } from 'solid-js/store';
+import MaybeA from './MaybeA';
 
 import styles from './CreatureDetail.module.css';
-import MaybeA from './MaybeA';
 
 export default function CreatureDetail(props: {
 	creature: CreatureBlueprint

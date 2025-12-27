@@ -1,5 +1,5 @@
 import { createAsync, useSearchParams } from '@solidjs/router';
-import { For, Show } from 'solid-js';
+import { For } from 'solid-js';
 import CreatureDetail from '~/components/CreatureDetail';
 import { getEncounter, getName, getParent } from '~/utils';
 import Back from '~/components/Back';
