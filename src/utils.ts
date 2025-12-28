@@ -76,3 +76,7 @@ export async function deleteFileConfirm(path: string) {
 	if(confirm(`Are you sure you want to delete file "${path}"`))
 		await deleteFile(path);
 }
+
+export function rollD20() {
+	return Math.floor(Math.random() * 20) + 1;
+}

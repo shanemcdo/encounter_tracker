@@ -1,8 +1,9 @@
 import { createAsync, useSearchParams } from '@solidjs/router';
 import { For } from 'solid-js';
-import CreatureDetail from '~/components/CreatureDetail';
 import { getEncounter } from '~/utils';
+import CreatureDetail from '~/components/CreatureDetail';
 import Header from '~/components/Header';
+import Initiative from '~/components/Initiative';
 
 import styles from './encounter.module.css';
 
@@ -18,10 +19,13 @@ export default function Encounter() {
 					{ path: 'edit', name: 'Edit' },
 				]}
 			/>
-			<div class={styles.grid}>
-				<For each={encounter()}>{ creature =>
-					<CreatureDetail creature={creature} />
-				}</For>
+			<div class={styles.container}>
+				<div class={styles.grid}>
+					<For each={encounter()}>{ creature =>
+						<CreatureDetail creature={creature} />
+					}</For>
+				</div>
+				<Initiative encounter={encounter()!} />
 			</div>
 		</main>
 	);

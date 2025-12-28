@@ -1,0 +1,24 @@
+.initiative {
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	justify-content: center;
+	align-content: start;
+	gap: 0 0.5rem;
+
+	h2 {
+		margin: 0;
+	}
+
+	h2,
+	h3,
+	.wide {
+		grid-column: span 3;
+	}
+
+	& > input {
+		width: 6rem;
+	}
+	& > input[type="number"] {
+		width: 3rem;
+	}
+}

@@ -1,7 +1,13 @@
+.container {
+	display: flex;
+	justify-content: space-around;
+}
+
 .grid {
 	display: grid;
 	grid-template-columns: repeat(5, auto);
 	width: auto;
 	justify-content: center;
+	align-content: start;
 	gap: 0.5rem;
 }
