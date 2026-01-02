@@ -16,4 +16,5 @@ type CreatureInstance = CreatureBlueprint & {
 
 interface Encounter {
 	creatures: CreatureBlueprint[];
+	notes: string,
 }

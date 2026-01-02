@@ -1,0 +1,12 @@
+.notes {
+	h2 {
+		text-align: center;
+	}
+
+	textarea {
+		display: block;
+		margin: auto;
+		width: clamp(20rem, 80vw, 60rem);
+		height: clamp(20rem, 40vh, 60rem);
+	}
+}

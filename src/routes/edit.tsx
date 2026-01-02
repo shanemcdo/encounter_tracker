@@ -3,6 +3,7 @@ import { createStore } from 'solid-js/store';
 import { For, untrack, createSignal, createEffect } from 'solid-js';
 import { getParent, getEncounter, getName, writeJSON, deleteFileConfirm, getIndexFromName, getReferenceURL, fetchMonsterAPI } from '~/utils';
 import Header from '~/components/Header';
+import Notes from '~/components/Notes';
 
 import styles from './edit.module.css';
 
@@ -14,10 +15,13 @@ export default function Edit() {
 	const [creatures, setCreatures] = createStore<CreaturePartial[]>([]);
 	const [encounterPath, setEncounterPath] = createSignal(path());
 	const encounter = createAsync(() => getEncounter(encounterPath()));
+	let notesElement!: HTMLTextAreaElement;
 
 	createEffect(() => {
 		setCreatures(encounter()?.creatures ?? []);
+		notesElement.value = encounter()?.notes ?? '';
 	})
+
 
 	return (
 		<main>
@@ -39,7 +43,10 @@ export default function Edit() {
 					type='button'
 					value='Save'
 					onclick={async () => {
-						await writeJSON(newFilePath(), { creatures });
+						await writeJSON(newFilePath(), { 
+							creatures,
+							notes: notesElement.value,
+						});
 					}}
 				/>
 				<input
@@ -162,6 +169,7 @@ export default function Edit() {
 						setCreatures(creatures.length, { });
 					}}
 				/>
+				<Notes ref={notesElement} />
 			</div>
 		</main>
 	);

@@ -3,6 +3,7 @@ import { For } from 'solid-js';
 import { getEncounter } from '~/utils';
 import CreatureDetail from '~/components/CreatureDetail';
 import Header from '~/components/Header';
+import Notes from '~/components/Notes';
 import Initiative from '~/components/Initiative';
 
 import styles from './encounter.module.css';
@@ -26,21 +27,23 @@ export default function Encounter() {
 	};
 
 	return (
-		<main>
+		<main class={styles.encounter}>
 			<Header
 				path={path()}
 				links={[
 					{ path: 'edit', name: 'Edit' },
 				]}
 			/>
-			<div class={styles.container}>
+			<div class={styles.row}>
 				<div class={styles.grid}>
+					<h2>Creatures</h2>
 					<For each={creatures()}>{ creature =>
 						<CreatureDetail creature={creature} />
 					}</For>
 				</div>
 				<Initiative creatures={creatures()!} />
 			</div>
+			<Notes value={encounter()?.notes ?? ''} />
 		</main>
 	);
 }

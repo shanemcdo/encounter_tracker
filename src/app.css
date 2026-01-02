@@ -23,6 +23,7 @@ body {
 	}
 }
 
+textarea,
 button,
 input {
 	background: var(--bg);
