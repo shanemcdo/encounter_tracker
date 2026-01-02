@@ -19,11 +19,14 @@ export async function getEncounter(filename: string): Promise<Encounter> {
 	"use server";
 	try {
 		const file = await readFile(filename, 'utf-8');
-		const encounters = JSON.parse(file);
-		return encounters;
+		const json = JSON.parse(file);
+		if(Array.isArray(json)) {
+			return { creatures: json };
+		}
+		return json;
 	} catch(e) {
 		console.error(e)
-		return [];
+		return { creatures: [] };
 	}
 }
 

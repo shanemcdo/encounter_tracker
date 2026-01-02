@@ -14,4 +14,6 @@ type CreatureInstance = CreatureBlueprint & {
 	hp: number,
 }
 
-type Encounter = CreatureBlueprint[];
+interface Encounter {
+	creatures: CreatureBlueprint[];
+}

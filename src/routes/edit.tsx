@@ -16,7 +16,7 @@ export default function Edit() {
 	const encounter = createAsync(() => getEncounter(encounterPath()));
 
 	createEffect(() => {
-		setCreatures(encounter() ?? []);
+		setCreatures(encounter()?.creatures ?? []);
 	})
 
 	return (
@@ -39,7 +39,7 @@ export default function Edit() {
 					type='button'
 					value='Save'
 					onclick={async () => {
-						await writeJSON(newFilePath(), creatures);
+						await writeJSON(newFilePath(), { creatures });
 					}}
 				/>
 				<input

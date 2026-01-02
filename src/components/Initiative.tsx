@@ -16,7 +16,7 @@ type Order = {
 }[];
 
 export default function Initiative(props: {
-	encounter: Encounter,
+	creatures: CreatureBlueprint[],
 }) {
 	const [players, setPlayers] = createSignal<Player[]>([]);
 	const [order, setOrder] = createSignal<Order>([]);
@@ -26,7 +26,7 @@ export default function Initiative(props: {
 				name: player.name[0](),
 				initiative: player.initiative[0](),
 			})),
-			...props.encounter.map(creature => ({
+			...props.creatures.map(creature => ({
 				name: creature.name,
 				initiative: rollD20(),
 			})),
@@ -35,7 +35,7 @@ export default function Initiative(props: {
 
 	const setup = <>
 		<h3>Monsters</h3>
-		<For each={props.encounter}>{ creature =>
+		<For each={props.creatures}>{ creature =>
 			<>
 				<span class={styles.wide}>{creature.name}</span>
 			</>
