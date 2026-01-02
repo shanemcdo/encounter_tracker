@@ -11,6 +11,18 @@ export default function Encounter() {
 	const [searchParams, ] = useSearchParams()
 	const path = () => decodeURIComponent(searchParams.path as string);
 	const encounter = createAsync(() => getEncounter(path()));
+	const uniqueNamedEncounter = () => {
+		const names: Record<string, number> = {};
+		return encounter()?.map(obj => {
+			if(obj.name in names) {
+				obj.name = `${obj.name} ${++names[obj.name]}`;
+			} else {
+				names[obj.name] = 1;
+			}
+			return obj;
+		})
+	};
+
 	return (
 		<main>
 			<Header
@@ -21,11 +33,11 @@ export default function Encounter() {
 			/>
 			<div class={styles.container}>
 				<div class={styles.grid}>
-					<For each={encounter()}>{ creature =>
+					<For each={uniqueNamedEncounter()}>{ creature =>
 						<CreatureDetail creature={creature} />
 					}</For>
 				</div>
-				<Initiative encounter={encounter()!} />
+				<Initiative encounter={uniqueNamedEncounter()!} />
 			</div>
 		</main>
 	);
