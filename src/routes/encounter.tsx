@@ -43,7 +43,7 @@ export default function Encounter() {
 				</div>
 				<Initiative creatures={creatures()!} />
 			</div>
-			<Notes value={encounter()?.notes ?? ''} />
+			<Notes value={encounter()?.notes} />
 		</main>
 	);
 }

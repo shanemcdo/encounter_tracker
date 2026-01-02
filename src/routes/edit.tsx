@@ -19,7 +19,6 @@ export default function Edit() {
 
 	createEffect(() => {
 		setCreatures(encounter()?.creatures ?? []);
-		notesElement.value = encounter()?.notes ?? '';
 	})
 
 
@@ -169,7 +168,7 @@ export default function Edit() {
 						setCreatures(creatures.length, { });
 					}}
 				/>
-				<Notes ref={notesElement} />
+				<Notes ref={notesElement} value={encounter()?.notes} />
 			</div>
 		</main>
 	);
