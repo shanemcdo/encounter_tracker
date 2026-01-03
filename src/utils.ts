@@ -21,12 +21,18 @@ export async function getEncounter(filename: string): Promise<Encounter> {
 		const file = await readFile(filename, 'utf-8');
 		const json = JSON.parse(file);
 		if(Array.isArray(json)) {
-			return { creatures: json };
+			return {
+				creatures: json,
+				notes: '',
+			};
 		}
 		return json;
 	} catch(e) {
 		console.error(e)
-		return { creatures: [] };
+		return {
+			creatures: [],
+			notes: '',
+		};
 	}
 }
 
