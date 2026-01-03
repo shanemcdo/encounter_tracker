@@ -2,6 +2,10 @@ import { writeFile, readFile, unlink } from 'fs/promises';
 
 const API_URL = 'https://www.dnd5eapi.co/api/2014/monsters/';
 const REFERENCE_URL = 'https://5thsrd.org/gamemaster_rules/monsters/';
+const DEFAULT_ENCOUNTER: Encounter = Object.freeze({
+	creatures: [],
+	notes: '',
+})
 
 export function getIndexFromName(name: string) {
 	return name.toLocaleLowerCase().replace(' ', '-')
@@ -22,17 +26,14 @@ export async function getEncounter(filename: string): Promise<Encounter> {
 		const json = JSON.parse(file);
 		if(Array.isArray(json)) {
 			return {
+				...DEFAULT_ENCOUNTER,
 				creatures: json,
-				notes: '',
 			};
 		}
 		return json;
 	} catch(e) {
-		console.error(e)
-		return {
-			creatures: [],
-			notes: '',
-		};
+		console.error(e);
+		return DEFAULT_ENCOUNTER;
 	}
 }
 
