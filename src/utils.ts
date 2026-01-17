@@ -8,11 +8,11 @@ const DEFAULT_ENCOUNTER: Encounter = Object.freeze({
 })
 
 export function getIndexFromName(name: string) {
-	return name.toLocaleLowerCase().replace(' ', '-')
+	return name.toLocaleLowerCase().replaceAll(' ', '-')
 }
 
 function getReferencePageByName(name: string) {
-	return name.toLocaleLowerCase().replace(' ', '_')
+	return name.toLocaleLowerCase().replaceAll(' ', '_')
 }
 
 export function getReferenceURL(name: string) {
